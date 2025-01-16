@@ -1,7 +1,3 @@
-Claro! Aqui está o README.md completo sem quebras, em formato único:
-
-markdown
-Copiar
 Editar
 <p align="center">
   <img src="https://i.ibb.co/zs1zcs3/Video-Frame.png" width="30%" />
