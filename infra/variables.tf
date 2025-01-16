@@ -20,7 +20,7 @@ variable "dynamo_db_user" {
   type        = string
 }
 
-# variable "dynamo_db_password" {
-#   description = "DynamoDB Database Password"
-#   type        = string
-# }
+variable "dynamo_db_password" {
+  description = "DynamoDB Database Password"
+  type        = string
+}
