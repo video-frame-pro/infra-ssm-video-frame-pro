@@ -42,14 +42,14 @@ resource "aws_ssm_parameter" "dynamo_db_user" {
   description = "DynamoDB Database User"
 }
 
-# data "aws_ssm_parameter" "dynamo_db_password" {
-#   name = "/dynamo/db_password"
-# }
-#
-# resource "aws_ssm_parameter" "dynamo_db_password" {
-#   count       = length(data.aws_ssm_parameter.dynamo_db_password.*.name) == 0 ? 1 : 0
-#   name        = "/dynamo/db_password"
-#   type        = "SecureString"
-#   value       = var.dynamo_db_password
-#   description = "DynamoDB Database Password"
-# }
+data "aws_ssm_parameter" "dynamo_db_password" {
+  name = "/dynamo/db_password"
+}
+
+resource "aws_ssm_parameter" "dynamo_db_password" {
+  count       = length(data.aws_ssm_parameter.dynamo_db_password.*.name) == 0 ? 1 : 0
+  name        = "/dynamo/db_password"
+  type        = "SecureString"
+  value       = var.dynamo_db_password
+  description = "DynamoDB Database Password"
+}
