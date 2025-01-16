@@ -10,6 +10,6 @@ output "dynamo_db_user" {
   value = aws_ssm_parameter.dynamo_db_user.name
 }
 
-output "dynamo_db_password" {
-  value = aws_ssm_parameter.dynamo_db_password.name
-}
+# output "dynamo_db_password" {
+#   value = aws_ssm_parameter.dynamo_db_password.name
+# }
