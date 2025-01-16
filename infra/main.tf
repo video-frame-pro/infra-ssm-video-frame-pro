@@ -42,14 +42,14 @@ resource "aws_ssm_parameter" "dynamo_db_user" {
 }
 
 # Parâmetro DynamoDB Database Password
-# resource "aws_ssm_parameter" "dynamo_db_password" {
-#   name        = "/dynamo/db_password"
-#   type        = "SecureString"
-#   value       = var.dynamo_db_password
-#   description = "DynamoDB Database Password"
-#
-#   lifecycle {
-#     create_before_destroy = true
-#     ignore_changes        = [value]  # Não altera o valor existente
-#   }
-# }
+resource "aws_ssm_parameter" "dynamo_db_password" {
+  name        = "/dynamo/db_password"
+  type        = "SecureString"
+  value       = var.dynamo_db_password
+  description = "DynamoDB Database Password"
+
+  lifecycle {
+    create_before_destroy = true
+    ignore_changes        = [value]  # Não altera o valor existente
+  }
+}
