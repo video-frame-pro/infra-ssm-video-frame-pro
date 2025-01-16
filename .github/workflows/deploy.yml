@@ -31,17 +31,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Export environment variables
-        run: |
-          echo "TF_VAR_aws_access_key=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
-          echo "TF_VAR_aws_secret_key=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> $GITHUB_ENV
-          echo "TF_VAR_region=${{ secrets.AWS_REGION }}" >> $GITHUB_ENV
-          echo "TF_VAR_table_name=cliente" >> $GITHUB_ENV
-
-      - name: Terraform Refresh
-        run: terraform refresh -input=false
+      - name: Run Terraform Plan
+        run: terraform plan -out=tfplan
         working-directory: ./infra
 
-      - name: Terraform Apply
-        run: terraform apply -auto-approve
+      - name: Check for Changes and Apply
+        run: |
+          terraform show -json tfplan | jq '.resource_changes | length' > changes.txt
+          CHANGES=$(cat changes.txt)
+          if [ "$CHANGES" -gt 0 ]; then
+            echo "Changes detected, applying Terraform."
+            terraform apply -auto-approve tfplan
+          else
+            echo "No changes detected, skipping apply."
+          fi
         working-directory: ./infra
