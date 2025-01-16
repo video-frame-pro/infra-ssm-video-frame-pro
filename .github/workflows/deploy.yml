@@ -31,18 +31,18 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Run Terraform Plan
+      - name: Generate Terraform Plan
         run: terraform plan -out=tfplan
         working-directory: ./infra
 
-      - name: Check for Changes and Apply
+      - name: Check if plan has changes
         run: |
+          terraform show -json tfplan
           terraform show -json tfplan | jq '.resource_changes | length' > changes.txt
-          CHANGES=$(cat changes.txt)
-          if [ "$CHANGES" -gt 0 ]; then
-            echo "Changes detected, applying Terraform."
-            terraform apply -auto-approve tfplan
+          if [[ $(cat changes.txt) -gt 0 ]]; then
+            echo "Changes detected."
+            terraform apply -auto-approve
           else
-            echo "No changes detected, skipping apply."
+            echo "No changes detected."
           fi
         working-directory: ./infra
