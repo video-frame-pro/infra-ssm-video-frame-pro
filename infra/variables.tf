@@ -1,26 +1,21 @@
-# Região da AWS
 variable "aws_region" {
-  description = "Região onde os recursos serão provisionados"
+  description = "AWS region"
   type        = string
   default     = "us-east-1"
 }
 
+variable "environment" {
+  description = "Ambiente (prod)"
+  type        = string
+  default     = "prod"
+}
+
 variable "cognito_user_pool_id" {
-  description = "Cognito User Pool ID"
+  description = "ID do User Pool do Cognito"
   type        = string
 }
 
 variable "cognito_client_id" {
-  description = "Cognito App Client ID"
+  description = "ID do Cliente do Cognito"
   type        = string
 }
-
-variable "dynamo_db_user" {
-  description = "DynamoDB Database User"
-  type        = string
-}
-
-# variable "dynamo_db_password" {
-#   description = "DynamoDB Database Password"
-#   type        = string
-# }
